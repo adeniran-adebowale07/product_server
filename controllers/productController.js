@@ -62,6 +62,9 @@ const newObj=getObject(products,data.title,data.description);
 };
 
 
+const updateProduct=(req, resp)=>{};
+
+
 
 const deleteProduct = (req, resp)=>{
     const productID= req.params.id;
@@ -103,4 +106,5 @@ module.exports={
     createProduct, 
     getProductByID,
     deleteProduct,
+    updateProduct,
 }

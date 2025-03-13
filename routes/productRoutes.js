@@ -8,6 +8,7 @@ router.get("/",controller.getProducts);
 
 router.get(`/:id`,controller.getProductByID);
 
+router.patch(`/:id`, controller.updateProduct);
 
 router.post("/",controller.createProduct);
 

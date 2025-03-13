@@ -1,15 +1,43 @@
-let products=require('../statics/repository');
+var products=require('../statics/repository');
 
 
 const getProducts=(request,resp)=>{
 
-    const response={
-        success:true,
-        message:"Products Retrieved!!!",
-        data:{...products.slice(0,30)}
+    // console.log(request.query);
+    
+//if query is empty return the products
+    if(Object.keys(request.query).length===0){
+        const response={
+            success:true,
+            message:"Products Retrieved!!!",
+            data:{...products.slice(0,30)}
+        }
+        
+       return  resp.send(response);
+    }
+
+    //if query contains 'limit' remove it from the list
+    let filteredList=[];
+    let queryList=Object.keys(request.query);
+    let idx =queryList.findIndex(txt=>txt=='limit')
+    if (idx===-1){ 
+        filteredList=queryProductRepo(products,request.query);
+
+       return resp.status(200).send({success: true, data: [...filteredList]})
+
+
+       
+
     }
     
-    resp.send(response);
+    let {limit, ...newQueryList}=request.query
+    
+    filteredList=queryProductRepo(products,newQueryList);
+
+    
+   return  resp.status(200).send({success: true, data: filteredList.slice(0,limit)})
+   
+
 
 };
 
@@ -129,6 +157,33 @@ function getObject(itrble, title, description) {
     
 
     return objt;
+}
+
+
+function queryProductRepo(arr, qry){
+let newArray=[];
+
+
+//go through the querylist and then return the ones that matches
+
+for(const key in qry){
+
+    
+    
+    let ret=arr.filter(
+        
+         obj => obj[key].toString().toLowerCase().includes(qry[key].toLowerCase())
+       
+    
+    );
+// console.log(ret);
+newArray=newArray.concat(ret)
+
+   
+}
+
+ return newArray;
+
 }
 
 

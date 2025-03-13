@@ -64,19 +64,26 @@ const newObj=getObject(products,data.title,data.description);
 
 const updateProduct=(req, resp)=>{
 
-    const product = products.find(obj => obj.id ===parseInt(req.params.id));
+    let product = products.find(obj => obj.id ===parseInt(req.params.id));
 
-    console.log(req.params.id);
+    console.log(product);
      
     if (!product ){
      
-     resp.status=404;
-     resp.send({success:false, message:"The Product does not exist!!!"});
+     resp.status(404).send({success:false, message:"The Product does not exist!!!"});
  
     }
 
 
-    products[product.id - 1]={}
+    const data=req.body;
+    product={...product,...data};
+
+    products={...products,...product};
+
+    resp.status(200).send({success:true, message:"Updated Successfully"});
+    //const txt=getObject(products, product.title, product.description);
+
+    console.log(products);
 
     
 };
@@ -109,8 +116,8 @@ console.log(products);
 };
 
 
-function getObject(iterable, title, description) {
-    const objt = iterable.find(obj=>obj.title===title && obj.description===description);
+function getObject(itrble, title, description) {
+    const objt = itrble.find(obj=>obj.title===title && obj.description===description);
     
     if(!objt){
         return {"message":"No Object found"} ;

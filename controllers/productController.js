@@ -65,8 +65,9 @@ const newObj=getObject(products,data.title,data.description);
 const updateProduct=(req, resp)=>{
 
     let product = products.find(obj => obj.id ===parseInt(req.params.id));
+    const indx = products.findIndex(obj=>obj.id==product.id);
 
-    console.log(product);
+   
      
     if (!product ){
      
@@ -76,9 +77,11 @@ const updateProduct=(req, resp)=>{
 
 
     const data=req.body;
-    product={...product,...data};
+    let updatedProduct={...product,...data};
 
-    products={...products,...product};
+    
+
+    products[indx]=updatedProduct;
 
     resp.status(200).send({success:true, message:"Updated Successfully"});
     //const txt=getObject(products, product.title, product.description);
@@ -93,7 +96,7 @@ const updateProduct=(req, resp)=>{
 const deleteProduct = (req, resp)=>{
     const productID= req.params.id;
     const product= products.find((prd)=>prd.id===parseInt(productID));
-   console.log(product)
+//    console.log(product)
     if(!product){
 
         const rspMsg={
@@ -111,7 +114,7 @@ products=[...newArray];
 
 resp.send({success: true, message:`Product has been deleted Succesfully!!!`});
 
-console.log(products);
+// console.log(products);
 
 };
 

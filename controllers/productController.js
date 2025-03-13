@@ -50,14 +50,14 @@ const createProduct=(req, resp)=>{
 
 
     products.push({
-        ID:products.length+1,
+        id:products.length+1,
         ...data
     });
     
 const newObj=getObject(products,data.title,data.description);
 
     resp.send({status: 201, message:`Product has been added!!!\n The Product ID is ${newObj.id}`});
-
+    console.log(newObj);
 
 };
 
@@ -69,7 +69,7 @@ const updateProduct=(req, resp)=>{};
 const deleteProduct = (req, resp)=>{
     const productID= req.params.id;
     const product= products.find((prd)=>prd.id===parseInt(productID));
-
+   console.log(product)
     if(!product){
 
         const rspMsg={
@@ -81,23 +81,27 @@ const deleteProduct = (req, resp)=>{
 
     }
 
-    const newArray = products.filter(item => item.id !== product.id);
+    const newArray = products.filter(obj=> obj.id !== product.id);
 
 products=[...newArray];
+
+resp.send({success: true, message:`Product has been deleted Succesfully!!!`});
+
+console.log(products);
 
 };
 
 
 function getObject(iterable, title, description) {
-    const obj = iterable.find(obj=>obj.title===title && obj.description===description);
+    const objt = iterable.find(obj=>obj.title===title && obj.description===description);
     
-    if(!obj){
+    if(!objt){
         return {"message":"No Object found"} ;
     }
 
     
 
-    return obj;
+    return objt;
 }
 
 

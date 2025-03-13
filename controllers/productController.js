@@ -62,7 +62,24 @@ const newObj=getObject(products,data.title,data.description);
 };
 
 
-const updateProduct=(req, resp)=>{};
+const updateProduct=(req, resp)=>{
+
+    const product = products.find(obj => obj.id ===parseInt(req.params.id));
+
+    console.log(req.params.id);
+     
+    if (!product ){
+     
+     resp.status=404;
+     resp.send({success:false, message:"The Product does not exist!!!"});
+ 
+    }
+
+
+    products[product.id - 1]={}
+
+    
+};
 
 
 

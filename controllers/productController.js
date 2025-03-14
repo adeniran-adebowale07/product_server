@@ -3,9 +3,9 @@ var products=require('../statics/repository');
 
 const getProducts=(request,resp)=>{
 
-    // console.log(request.query);
+   
     
-//if query is empty return the products
+
     if(Object.keys(request.query).length===0){
         const response={
             success:true,
@@ -16,7 +16,7 @@ const getProducts=(request,resp)=>{
        return  resp.send(response);
     }
 
-    //if query contains 'limit' remove it from the list
+    
     let filteredList=[];
     let queryList=Object.keys(request.query);
     let idx =queryList.findIndex(txt=>txt=='limit')
@@ -46,7 +46,7 @@ const getProductByID=(req,resp)=>{
 
    const product = products.find(obj => obj.id ===parseInt(req.params.id));
 
-   console.log(req.params.id);
+   
     
    if (!product ){
     
@@ -68,7 +68,7 @@ const createProduct=(req, resp)=>{
     
     const itExist = products.find(obj=>obj.title===data.title && obj.description===data.description);
    
-// console.log(data.title,data.description);
+
 
     if(itExist!=undefined){
         
@@ -85,7 +85,7 @@ const createProduct=(req, resp)=>{
 const newObj=getObject(products,data.title,data.description);
 
     resp.send({status: 201, message:`Product has been added!!!\n The Product ID is ${newObj.id}`});
-    console.log(newObj);
+    
 
 };
 
@@ -112,9 +112,9 @@ const updateProduct=(req, resp)=>{
     products[indx]=updatedProduct;
 
     resp.status(200).send({success:true, message:"Updated Successfully"});
-    //const txt=getObject(products, product.title, product.description);
 
-    console.log(products);
+
+    
 
     
 };
@@ -124,7 +124,7 @@ const updateProduct=(req, resp)=>{
 const deleteProduct = (req, resp)=>{
     const productID= req.params.id;
     const product= products.find((prd)=>prd.id===parseInt(productID));
-//    console.log(product)
+
     if(!product){
 
         const rspMsg={
@@ -142,7 +142,6 @@ products=[...newArray];
 
 resp.send({success: true, message:`Product has been deleted Succesfully!!!`});
 
-// console.log(products);
 
 };
 
@@ -164,7 +163,6 @@ function queryProductRepo(arr, qry){
 let newArray=[];
 
 
-//go through the querylist and then return the ones that matches
 
 for(const key in qry){
 
@@ -176,7 +174,7 @@ for(const key in qry){
        
     
     );
-// console.log(ret);
+
 newArray=newArray.concat(ret)
 
    
